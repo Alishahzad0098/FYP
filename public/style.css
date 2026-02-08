@@ -1,0 +1,241 @@
+/* ===============================
+   SAPPHIRE THEME COLOR OVERRIDES
+================================ */
+
+/* Global */
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background-color: #ffffff;
+  color: #111111;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Navbar Hover */
+.navbar .nav-link:hover,
+.navbar .dropdown-toggle:hover {
+  color: #C6A15B !important; /* Sapphire Gold */
+}
+
+/* Dropdown */
+.dropdown-item:hover {
+  background-color: #111111;
+  color: #C6A15B !important;
+}
+
+/* Sidebar */
+.sidebar ul li a {
+  color: #111111;
+}
+
+.sidebar ul li a:hover {
+  color: #C6A15B;
+}
+
+/* Prices */
+.price-mar,
+.item_price {
+  color: #C6A15B;
+  font-weight: 600;
+}
+
+del {
+  color: #999999;
+}
+
+/* Product Cards */
+.card {
+  border: 1px solid #eee;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.card-img-container {
+  background: #F5F5F5;
+  border-bottom: 1px solid #eee;
+}
+
+/* Quick View Button */
+.quick-view-btn {
+  background: rgba(17, 17, 17, 0.9);
+  color: #ffffff;
+}
+
+.quick-view-btn:hover {
+  background: #C6A15B;
+}
+
+/* Add to Cart */
+.add-to-cart-btn {
+  background-color: #111111;
+  border-color: #111111;
+  color: #ffffff;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #C6A15B;
+  border-color: #C6A15B;
+  color: #111111;
+}
+
+/* Buttons (Luxury CTA) */
+.button {
+  background-color: #111111;
+  color: #ffffff;
+  border: 2px solid #C6A15B;
+}
+
+.button:hover {
+  background-color: #C6A15B;
+  color: #111111;
+}
+
+/* Footer */
+footer,
+.sapphire-footer {
+  background-color: #111111;
+  color: #cccccc;
+}
+
+footer ul li a,
+.footer-links a {
+  color: #cccccc;
+}
+
+footer ul li a:hover,
+.footer-links a:hover {
+  color: #C6A15B;
+}
+
+/* Footer Headings */
+.footer-logo,
+.footer-title {
+  color: #ffffff;
+}
+
+/* Divider */
+.footer-divider {
+  border-color: #333333;
+}
+
+/* Carousel Smoothness */
+.carousel-inner {
+  transition: transform 0.6s ease-in-out;
+}
+/* ===== SAPPHIRE BRAND STYLES ===== */
+
+body {
+    font-family: 'Instrument Sans', sans-serif;
+    background-color: #fff;
+}
+
+/* Navbar */
+.sapphire-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eee;
+}
+
+.sapphire-logo {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #111;
+    text-transform: uppercase;
+}
+
+.sapphire-link {
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #111 !important;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.sapphire-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    background: #111;
+    left: 0;
+    bottom: -4px;
+    transition: 0.3s;
+}
+
+.sapphire-link:hover::after {
+    width: 100%;
+}
+
+.sapphire-btn {
+    border: 1px solid #111;
+    background: transparent;
+    padding: 8px 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.sapphire-btn:hover {
+    background: #111;
+    color: #fff;
+}
+
+/* Footer */
+.sapphire-footer {
+    background-color: #111;
+    color: #ccc;
+}
+
+.footer-logo {
+    font-size: 26px;
+    letter-spacing: 4px;
+    color: #fff;
+}
+
+.footer-title {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.footer-text {
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-divider {
+    border-color: #333;
+}
+
+.footer-copy {
+    font-size: 12px;
+    color: #777;
+}
