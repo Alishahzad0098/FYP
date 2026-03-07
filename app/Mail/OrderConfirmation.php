@@ -36,7 +36,7 @@ class OrderConfirmation extends Mailable
     {
         return $this->from(config('mail.from.address'), config('mail.from.name'))
             ->subject('Order Confirmation - #' . $this->order->id)
-            ->view('order_confirmation');
+            ->view('emails.order_confirmation');
 
     }
 }

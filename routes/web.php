@@ -7,6 +7,7 @@ use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Ordercontroller;
 
+
 // Public routes
 Route::get("/", [ProductController::class, "show"])->name('home');
 Route::get('/product/{id}', [ProductController::class, "product"])->name('productshow');
@@ -23,7 +24,10 @@ Route::get("/login", [Usercontroller::class, "loginpage"])->name('loginpage');
 Route::post("/loginsave", [Usercontroller::class, "login"])->name('login');
 
 // Authenticated routes
-Route::middleware(['auth', 'userLogin'])->group(function () {
+Route::middleware([
+    \Illuminate\Auth\Middleware\Authenticate::class,
+    \App\Http\Middleware\UserLogin::class,
+])->group(function () {
     Route::post('/logout', function () {
         Auth::logout();
         return redirect()->route('loginpage');
@@ -39,36 +43,49 @@ Route::middleware(['auth', 'userLogin'])->group(function () {
     Route::get('/checkoutpage', [Ordercontroller::class, 'show'])->name('checkoutpage');
     Route::post('/checkout', [Ordercontroller::class, 'placeOrder'])->name('checkout');
 });
-
 // Admin-only routes
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware([
+    \Illuminate\Auth\Middleware\Authenticate::class,
+    \App\Http\Middleware\CheckRole::class . ':admin',
+])->group(function () {
+
+    // Dashboard
     Route::get("/dashboard", [Usercontroller::class, "dashboardpage"])->name('dashboard');
 
     // Products
-    Route::get("/form", [ProductController::class, "create"])->name('form.product');
-    Route::get("/table", [ProductController::class, "table"])->name("table.product");
-    Route::post("/store", [ProductController::class, "store"])->name("store.product");
-    Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit.product');
-    Route::post('/update/{id}', [ProductController::class, 'update'])->name('update.product');
-    Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('delete.product');
+    Route::prefix('products')->group(function () {
+        Route::get("/form", [ProductController::class, "create"])->name('form.product');
+        Route::get("/table", [ProductController::class, "table"])->name("table.product");
+        Route::post("/store", [ProductController::class, "store"])->name("store.product");
+        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit.product');
+        Route::post('/update/{id}', [ProductController::class, 'update'])->name('update.product');
+        Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('delete.product');
+    });
 
     // Users
-    Route::get("/authtable", [Usercontroller::class, "table"])->name('authtable');
-    Route::get("/admintable", [Usercontroller::class, "admintable"])->name('admintable');
-    Route::get('/edituser/{id}', [Usercontroller::class, "edituser"])->name('edit.user');
-    Route::post('/user/update/{id}', [Usercontroller::class, 'update'])->name('update.user');
-    Route::delete('/delete-user/{id}', [Usercontroller::class, 'deleteuser'])->name('delete.user');
+    Route::prefix('users')->group(function () {
+        Route::get("/authtable", [Usercontroller::class, "table"])->name('authtable');
+        Route::get("/admintable", [Usercontroller::class, "admintable"])->name('admintable');
+        Route::get('/edituser/{id}', [Usercontroller::class, "edituser"])->name('edit.user');
+        Route::post('/user/update/{id}', [Usercontroller::class, 'update'])->name('update.user');
+        Route::delete('/delete-user/{id}', [Usercontroller::class, 'deleteuser'])->name('delete.user');
+    });
 
     // Orders
-    Route::get('/admin/ordertable', [Ordercontroller::class, 'order'])->name('order.table');
-    Route::get('/admin/orderitemtable', [Ordercontroller::class, 'orderitem'])->name('orderitem.table');
+    Route::prefix('admin')->group(function () {
+        Route::get('/ordertable', [Ordercontroller::class, 'order'])->name('order.table');
+        Route::get('/orderitemtable', [Ordercontroller::class, 'orderitem'])->name('orderitem.table');
+    });
 
     // Carousel
-    Route::get("/carform", [CarouselController::class, "create"])->name('form.carousel');
-    Route::get("/cartable", [CarouselController::class, "table"])->name("table.car");
-    Route::post("/carstore", [CarouselController::class, "store"])->name("store.car");
-    Route::get('/cardelete/{id}', [CarouselController::class, 'delete'])->name('delete.car');
+    Route::prefix('carousel')->group(function () {
+        Route::get("/form", [CarouselController::class, "create"])->name('form.carousel');
+        Route::get("/table", [CarouselController::class, "table"])->name("table.car");
+        Route::post("/store", [CarouselController::class, "store"])->name("store.car");
+        Route::get('/delete/{id}', [CarouselController::class, 'delete'])->name('delete.car');
+    });
 });
+
 
 // Test mail
 Route::get('/test-mail', [Ordercontroller::class, 'sendTestEmail'])->name('test.mail');

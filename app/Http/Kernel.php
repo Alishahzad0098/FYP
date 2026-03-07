@@ -27,9 +27,8 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
-    protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
-        'userLogin' => \App\Http\Middleware\UserLogin::class,
-        'role' => \App\Http\Middleware\CheckRole::class,
-    ];
+    protected $middlewareAliases = [
+    'userLogin' => \App\Http\Middleware\UserLogin::class,
+];
+
 }

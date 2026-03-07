@@ -1,48 +1,47 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
+
 class Usercontroller extends Controller
 {
-    public function page()
-    {
-        return view('view');
-    }
+    // Show registration form
     public function view()
     {
         return view('register');
     }
-    public function table()
-{
-    if (Auth::check()) {
-        if (Auth::user()->role === 'admin') {
-            $users = User::where('role', 'user')->get(); // renamed
-            return view('authtable', compact('users')); // pass plural
-        } else {
-            return redirect()->route('home');
-        }
-    } else {
-        return redirect()->route('loginpage');
-    }
-}
 
-public function admintable()
-{
-    if (Auth::check()) {
-        if (Auth::user()->role === 'admin') {
-            $admins = User::where('role', 'admin')->get(); // renamed
-            return view('admintable', compact('admins')); // pass plural
-        } else {
-            return redirect()->route('home');
-        }
-    } else {
-        return redirect()->route('loginpage');
+    // Show login form
+    public function loginpage()
+    {
+        return view('login');
     }
-}
 
+    // Handle registration
+    public function register(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required|in:user,admin',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'role' => $data['role'],
+            'password' => Hash::make($data['password']),
+        ]);
+
+        return redirect()->route('loginpage')->with('success', 'Registration successful.');
+    }
+
+    // Handle login
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -51,48 +50,48 @@ public function admintable()
         ]);
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('dashboard');
+            $request->session()->regenerate();
+
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('dashboard');
+            } else {
+                return redirect()->route('home');
+            }
         }
 
-        // If login fails
         return back()->withErrors([
             'email' => 'Invalid credentials.',
         ]);
     }
 
-    public function register(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'role' => 'required',
-            'password' => 'required|confirmed',
-        ]);
-        $user = User::create($data);
-        return redirect()->route('loginpage');
-    }
+    // Admin dashboard
     public function dashboardpage()
     {
-        if (Auth::check()) {
-            if (Auth::user()->role === 'admin') {
-                return view('layout.dashboard');
-            } else {
-                return redirect()->route('home');
-            }
-        } else {
-            return redirect()->route('loginpage');
-        }
+        return view('layout.dashboard'); // middleware ensures only admin can access
+    }
 
-    }
-    public function loginpage()
+    // Show all regular users
+    public function table()
     {
-        return view('login');
+        $users = User::where('role', 'user')->get();
+        return view('authtable', compact('users'));
     }
+
+    // Show all admins
+    public function admintable()
+    {
+        $admins = User::where('role', 'admin')->get();
+        return view('admintable', compact('admins'));
+    }
+
+    // Show edit form for a user
     public function edituser($id)
     {
-        $u1 = User::find($id);
-        return view('useredit', compact('u1'));
+        $user = User::findOrFail($id);
+        return view('useredit', compact('user'));
     }
+
+    // Update a user
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -101,7 +100,7 @@ public function admintable()
             'name' => 'required|string|max:255',
             'email' => "required|email|unique:users,email,{$id}",
             'role' => 'required|in:user,admin',
-            'password' => 'nullable|min:6', // password is optional
+            'password' => 'nullable|min:6',
         ]);
 
         $user->name = $data['name'];
@@ -114,16 +113,15 @@ public function admintable()
 
         $user->save();
 
-        return redirect()->route('authtable');
+        return redirect()->route('authtable')->with('success', 'User updated successfully.');
     }
+
+    // Delete a user
     public function deleteuser($id)
-{
-    $user = User::find($id);
-
-    if ($user) {
+    {
+        $user = User::findOrFail($id);
         $user->delete();
-    }
 
-    return redirect()->route('authtable')->with('success', 'User deleted successfully.');
-}
+        return redirect()->route('authtable')->with('success', 'User deleted successfully.');
+    }
 }
