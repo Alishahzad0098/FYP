@@ -195,7 +195,41 @@
             .mobile-filter-menu {
                 display: none !important;
             }
+             .hero {
+            background: url("{{ asset('asset/banner.jpeg') }}") center/cover no-repeat;
+            height: 70vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
         }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+        }
+ 
+    #bannerCarousel .carousel-control-prev,
+    #bannerCarousel .carousel-control-next {
+        width: 60px;
+        opacity: 1;
+    }
+
+    #bannerCarousel .carousel-control-prev {
+        left: 16px;
+    }
+
+    #bannerCarousel .carousel-control-next {
+        right: 16px;
+    }
+
     </style>
 
      @if (session('success'))
@@ -204,13 +238,73 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
-    <section class="hero">
-        <div>
-            <h1>Discover Elegance</h1>
-            <p>New Collection 2026 – Timeless Fashion for Every Occasion</p>
-            <a href="{{ route('products') }}" class="btn btn-warning text-dark mt-3">Explore Collection</a>
-        </div>
-    </section>
+    @if($banners->count() > 0)
+<div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+
+    <div class="carousel-indicators">
+        @foreach($banners as $index => $banner)
+            <button type="button" data-bs-target="#bannerCarousel"
+                data-bs-slide-to="{{ $index }}"
+                class="{{ $index === 0 ? 'active' : '' }}">
+            </button>
+        @endforeach
+    </div>
+
+    <div class="carousel-inner">
+        @foreach($banners as $index => $banner)
+            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                <img src="{{ asset('images/' . $banner->img) }}"
+                     class="d-block w-100"
+                     alt="Banner"
+                     style="height:70vh; object-fit: cover;">
+            </div>
+        @endforeach
+    </div>
+
+    @if($banners->count() > 1)
+        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+    <div style="
+        width: 48px; height: 48px;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1.5px solid rgba(255,255,255,0.4);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    "
+    onmouseover="this.style.background='rgba(255,255,255,0.35)'; this.style.transform='scale(1.1)'"
+    onmouseout="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='scale(1)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+        </svg>
+    </div>
+</button>
+
+<button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+    <div style="
+        width: 48px; height: 48px;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1.5px solid rgba(255,255,255,0.4);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    "
+    onmouseover="this.style.background='rgba(255,255,255,0.35)'; this.style.transform='scale(1.1)'"
+    onmouseout="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='scale(1)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+        </svg>
+    </div>
+</button>
+    @endif
+
+</div>
+@endif
     <div class="container mt-5">
         <!-- Page Heading -->
         <div class="text-center my-5">

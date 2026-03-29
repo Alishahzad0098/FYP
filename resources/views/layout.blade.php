@@ -80,25 +80,7 @@
             color: #fff !important;
         }
 
-        .hero {
-            background: url('https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
-            height: 90vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            text-align: center;
-        }
 
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-top: 1rem;
-        }
 
         .collections img {
             width: 100%;
@@ -119,6 +101,21 @@
         .footer a:hover {
             color: #f8c55c;
         }
+
+        #brandsDropdown .dropdown-menu {
+            display: none;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+        }
+
+        #brandsDropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
     </style>
 </head>
 
@@ -127,7 +124,7 @@
     <div class="container mt-2 text-secondary">
         <div class="d-flex flex-wrap align-items-center justify-content-between px-2">
             <h5 class="mb-2 mb-md-0" style="margin-left: 10px;">
-                Welcome to Maison Chic
+                Welcome to Style Spot!!!
             </h5>
             <div class="d-flex flex-wrap align-items-center" style="margin-right: 10px;">
                 @guest
@@ -153,30 +150,75 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg mt-3">
         <div class="container-fluid">
-            <a class="navbar-brand text-white" href="{{ route('home') }}">
-                <h2>SAPPHIRE</h2>
+            <a class="navbar-brand text-white d-flex align-items-center gap-2" href="{{ route('home') }}"
+                style="text-decoration: none;">
+                <img src="{{ asset('asset/WhatsApp Image 2026-03-07 at 3.20.38 PM.jpeg') }}" alt="STYLE SPOT Logo"
+                    style="height: 50px; width: auto;">
+                <h2 class="mb-0">STYLE SPOT</h2>
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('home') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('products') }}">Collections</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
+
+                    {{-- Home --}}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('home') }}">Home</a>
+
+                        {{-- Brands Dropdown --}}
+                    <li class="nav-item dropdown" id="brandsDropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false">
+                            Brands
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach ($brands as $brand)
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ route('home', array_merge(request()->query(), ['brand' => $brand])) }}">
+                                        {{ $brand }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+
+                    {{-- Collections --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('products') }}">Collections</a>
+                    </li>
+
+                    {{-- Summer Wear --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Summer Wear</a>
+                    </li>
+
+                    {{-- Winter Wear --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Winter Wear</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('about') }}">About</a>
+                    </li>
+                    {{-- Contact Us --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
+                    </li>
+
                 </ul>
             </div>
+
             <div class="d-flex align-items-center gap-3">
-                <!-- Cart Icon -->
+                {{-- Cart Icon --}}
                 <a href="{{ route('cart.show') }}" class="text-white fs-5 position-relative">
                     <i class="bi bi-bag"></i>
-                    <!-- Optional badge -->
                 </a>
 
-                <!-- Theme Toggle -->
+                {{-- Theme Toggle --}}
                 <button id="themeToggle" class="btn btn-link text-white fs-5 p-0">
                     <i class="bi bi-moon-fill"></i>
                 </button>
@@ -188,6 +230,7 @@
     <div>
         @yield('content')
     </div>
+    <hr>
 
     <!-- Featured Collections -->
     <div class="container collections my-5">
@@ -284,7 +327,24 @@
         });
     </script>
 
+    </style>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdown = document.getElementById('brandsDropdown');
+            const menu = dropdown.querySelector('.dropdown-menu');
+
+            dropdown.addEventListener('mouseenter', function () {
+                menu.classList.add('show');
+                dropdown.querySelector('.nav-link').setAttribute('aria-expanded', 'true');
+            });
+
+            dropdown.addEventListener('mouseleave', function () {
+                menu.classList.remove('show');
+                dropdown.querySelector('.nav-link').setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

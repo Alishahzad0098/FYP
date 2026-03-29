@@ -48,10 +48,9 @@ class ProductController extends Controller
 
         // For filter lists
         $brands = Products::select('brand_name')->distinct()->pluck('brand_name');
+        $banners = Carousel::all();
 
-        $c1 = Carousel::all();
-
-        return view('Home', compact('product', 'c1', 'brands'));
+        return view('Home', compact('product', 'banners', 'brands'));
     }
 
     // Show create product form
@@ -252,17 +251,17 @@ class ProductController extends Controller
 
 
     // About page
-    public function about()
-    {
-        return view('About');
-    }
+   public function about()
+{
+    $brands = Products::select('brand_name')->distinct()->pluck('brand_name');
+    return view('About', compact('brands'));
+}
 
-    // Contact page
-    public function contact()
-    {
-        return view('Contact');
-    }
-
+public function contact()
+{
+    $brands = Products::select('brand_name')->distinct()->pluck('brand_name');
+    return view('Contact', compact('brands'));
+}
     public function index(Request $request)
     {
         $query = Products::query();

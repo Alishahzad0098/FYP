@@ -317,8 +317,8 @@
                                 <p class="article">{{ $item->article_name }}</p>
 
                                 <div class="price">
-                                    <span class="current">${{ number_format($item->price, 2) }}</span>
-                                    <del>${{ number_format($item->price + 50, 2) }}</del>
+                                    <span class="current">PKR{{ number_format($item->price, 2) }}</span>
+                                    <del>PKR{{ number_format($item->price + 50, 2) }}</del>
                                 </div>
 
                                 <form action="{{ route('add.to.cart') }}" method="POST">

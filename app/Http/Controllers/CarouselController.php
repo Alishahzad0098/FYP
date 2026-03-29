@@ -25,6 +25,7 @@ class CarouselController extends Controller
             return redirect()->route('loginpage');
         }
     }
+
     function table()
     {
         if (Auth::check()) {
@@ -38,20 +39,37 @@ class CarouselController extends Controller
             return redirect()->route('loginpage');
         }
     }
+
     public function store(Request $request)
     {
+        $request->validate([
+            'img' => 'required|image|mimes:jpg,jpeg,png,webp|max:5048'
+        ]);
+
         $c1 = new Carousel();
-        $image = $request->file("img");
+        $image = $request->file('img');
 
-        if ($image) {
-            $imageName = time() . '_' . Str::random(5) . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-            $c1->img = $imageName;
-        }
+        $imageName = time() . '_' . Str::random(5) . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $imageName);
+        $c1->img = $imageName;
 
-        $c1->para = $request->para;
         $c1->save();
 
-        return redirect()->back()->with('success', 'Carousel saved!');
+        return redirect()->back()->with('success', 'Banner uploaded successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $banner = Carousel::findOrFail($id);
+        
+        // Delete image file from public/images
+        $imagePath = public_path('images/' . $banner->img);
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+        $banner->delete();
+
+        return redirect()->back()->with('success', 'Banner deleted successfully!');
     }
 }
