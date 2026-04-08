@@ -261,7 +261,7 @@ public function contact()
 {
     $brands = Products::select('brand_name')->distinct()->pluck('brand_name');
     return view('Contact', compact('brands'));
-}
+} 
     public function index(Request $request)
     {
         $query = Products::query();
