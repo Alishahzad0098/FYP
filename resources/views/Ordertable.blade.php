@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mt-4">
-        <table class="table table-bordered table-striped">
+        <table id="orders-table" class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
@@ -17,19 +17,38 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ( $order as $products)
-                <tr>
-                    <td>{{ $products->id }}</td>
-                    <td>{{ $products->customer_name }}</td>
-                    <td>{{ $products->number}}</td>
-                    <td>{{ $products->customer_email }}</td>
-                    <td>{{ $products->address }}</td>
-                    <td>{{ $products->total_amount }}</td>
-                    <td>
-                        <a href="{{ route('orderitem.table', $products->id) }}" class="btn btn-info btn-sm">View Items</a>
-                </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
+
+    @push('scripts')
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+        <script>
+            $(function () {
+                $('#orders-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{ route("datatable.orders") }}',
+                    columns: [
+                        { data: 'id', name: 'id' },
+                        { data: 'customer_name', name: 'customer_name' },
+                        { data: 'number', name: 'number' },
+                        { data: 'customer_email', name: 'customer_email' },
+                        { data: 'address', name: 'address' },
+                        { data: 'total_amount', name: 'total_amount' },
+                        {
+                            data: 'actions',
+                            name: 'actions',
+                            orderable: false,
+                            searchable: false,
+                            render: function (data, type, row) {
+                                return '<a href="/admin/orderitemtable/' + row.id + '" class="btn btn-info btn-sm">View Items</a>';
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
+    @endpush
 @endsection

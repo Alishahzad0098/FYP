@@ -71,10 +71,8 @@
         </div>
     @endif
 
-    <div class="ab-top">
-        <h1 class="text-center text-white" style="padding-top: 100px; font-size: 50px;">Products</h1>
-        <h5 class="text-center text-white" style="padding-bottom: 100px;">
-            <a href="{{ route('home') }}" class="text-white">Home</a> >> {{ $product->brand_name }}
+    <div class="ab-top text-center ">
+        <video src="{{ asset('asset/WhatsApp Video 2026-05-31 at 6.36.58 PM.mp4') }}"  autoplay muted loop></video>
         </h5>
     </div>
 
@@ -89,6 +87,7 @@
                 <div class="col-lg-5">
                     <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner" style="background-color: #f8f9fa; border-radius: 8px;">
+                            
                             @php $images = json_decode($product->images, true); @endphp
 
                             @if ($images && is_array($images))
@@ -130,9 +129,9 @@
                         <h3 class="mb-3 fw-bolder">{{ $product->brand_name }} - {{ $product->article_name }}</h3>
 
                         <p class="mb-3 fw-semibold fs-5">
-                            <span class="item_price text-warning">${{ $product->price }}</span>
-                            <del class="mx-2 font-weight-light text-muted">${{ $product->price + 40 }}</del>
-                            <span class="badge bg-danger ms-2">Save $40</span>
+                            <span class="item_price text-warning">Rs.{{ $product->price }}</span>
+                            <del class="mx-2 font-weight-light text-muted">Rs.{{ $product->price + 2000 }}</del>
+                            <span class="badge bg-danger ms-2">Save Rs.2000</span>
                         </p>
 
                         <ul class="text-muted mb-3">

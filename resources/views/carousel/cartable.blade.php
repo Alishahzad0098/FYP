@@ -16,39 +16,40 @@
             + Add Banner
         </a>
 
-        <table class="table table-bordered">
-            <thead>
+        <table id="carousel-table" class="table table-hover table-bordered align-middle">
+            <thead class="table-dark text-center">
                 <tr>
-                    <th>#</th>
+                    <th>ID</th>
                     <th>Banner Image</th>
-                    <th>Action</th>
+                    <th>Description</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($car as $index => $banner)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>
-                            <img src="{{ asset('images/' . $banner->img) }}"
-                                 width="150px" height="80px"
-                                 style="object-fit: cover; border-radius: 6px;">
-                        </td>
-                        <td>
-                            <form action="{{ route('delete.car', $banner->id) }}" method="POST"
-                                  onsubmit="return confirm('Delete this banner?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="3" class="text-center text-muted">No banners uploaded yet.</td>
-                    </tr>
-                @endforelse
             </tbody>
         </table>
 
     </div>
+
+    @push('scripts')
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+        <script>
+            $(function () {
+                $('#carousel-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{ route("datatable.carousel") }}',
+                    columns: [
+                        { data: 'id', name: 'id' },
+                        { data: 'img', name: 'img' },
+                        { data: 'para', name: 'para' },
+                        { data: 'created_at', name: 'created_at' },
+                        { data: 'actions', name: 'actions', orderable: false, searchable: false }
+                    ]
+                });
+            });
+        </script>
+    @endpush
 @endsection

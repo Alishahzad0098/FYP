@@ -20,7 +20,7 @@ class CheckRole
             return redirect()->route('loginpage');
         }
 
-        if ($role !== null && Auth::user()->role !== $role) {
+        if ($role !== null && strtolower(Auth::user()->role) !== strtolower($role)) {
             abort(403);
         }
 

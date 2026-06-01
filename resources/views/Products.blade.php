@@ -237,9 +237,9 @@
                     <!-- Price -->
                     <h5 class="mt-4">Price</h5>
                     @foreach ([
-                    '0-50'=>'Under $50',
-                    '50-100'=>'$50 - $100',
-                    '100+'=>'Above $100'
+                    '0-2000'=>'Under Rs.2000',
+                    '2000-5000'=>'Rs.2000 - Rs.5000',
+                    '5000+'=>'Above Rs.5000'
                     ] as $key => $label)
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="price" value="{{ $key }}"
@@ -261,16 +261,16 @@
             <!-- Tabs -->
            <ul class="nav nav-tabs justify-content-center sapphire-tabs" id="myTab" role="tablist">
     <li class="nav-item">
-        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#men">Men</button>
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#men">Sapphire</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#women">Women</button>
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#women">LimeLight</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#kids">Kids</button>
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#kids">Alkaram</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#accessories">Accessories</button>
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#accessories">Maria B</button>
     </li>
 </ul>
 
@@ -306,7 +306,7 @@
                                 </div>
 
                                 <!-- Quick view -->
-                                <a href="{{ route('productshow', ['id' => $item->id]) }}" class="quick-view">
+                                <a href="{{ route('product', ['id' => $item->id]) }}" class="quick-view">
                                     Quick View
                                 </a>
                             </div>
@@ -317,8 +317,8 @@
                                 <p class="article">{{ $item->article_name }}</p>
 
                                 <div class="price">
-                                    <span class="current">PKR{{ number_format($item->price, 2) }}</span>
-                                    <del>PKR{{ number_format($item->price + 50, 2) }}</del>
+                                    <span class="current">Rs.{{ number_format($item->price, 2) }}</span>
+                                    <del>Rs.{{ number_format($item->price + 50, 2) }}</del>
                                 </div>
 
                                 <form action="{{ route('add.to.cart') }}" method="POST">
@@ -376,7 +376,7 @@
                                 </div>
 
                                 <!-- Quick view -->
-                                <a href="{{ route('productshow', ['id' => $item->id]) }}" class="quick-view">
+                                <a href="{{ route('product', ['id' => $item->id]) }}" class="quick-view">
                                     Quick View
                                 </a>
                             </div>
@@ -387,8 +387,8 @@
                                 <p class="article">{{ $item->article_name }}</p>
 
                                 <div class="price">
-                                    <span class="current">${{ number_format($item->price, 2) }}</span>
-                                    <del>${{ number_format($item->price + 50, 2) }}</del>
+                                    <span class="current">Rs.{{ number_format($item->price, 2) }}</span>
+                                    <del>Rs.{{ number_format($item->price + 50, 2) }}</del>
                                 </div>
 
                                <form action="{{ route('add.to.cart') }}" method="POST">
@@ -446,7 +446,7 @@
                                     </div>
 
                                     <!-- Quick view -->
-                                    <a href="{{ route('productshow', ['id' => $item->id]) }}" class="quick-view">
+                                    <a href="{{ route('product', ['id' => $item->id]) }}" class="quick-view">
                                         Quick View
                                     </a>
                                 </div>
@@ -457,8 +457,8 @@
                                     <p class="article">{{ $item->article_name }}</p>
 
                                     <div class="price">
-                                        <span class="current">${{ number_format($item->price, 2) }}</span>
-                                        <del>${{ number_format($item->price + 50, 2) }}</del>
+                                        <span class="current">Rs.{{ number_format($item->price, 2) }}</span>
+                                        <del>Rs.{{ number_format($item->price + 50, 2) }}</del>
                                     </div>
 
                                    <form action="{{ route('add.to.cart') }}" method="POST">
@@ -516,7 +516,7 @@
                                 </div>
 
                                 <!-- Quick view -->
-                                <a href="{{ route('productshow', ['id' => $item->id]) }}" class="quick-view">
+                                <a href="{{ route('product', ['id' => $item->id]) }}" class="quick-view">
                                     Quick View
                                 </a>
                             </div>
@@ -527,8 +527,8 @@
                                 <p class="article">{{ $item->article_name }}</p>
 
                                 <div class="price">
-                                    <span class="current">${{ number_format($item->price, 2) }}</span>
-                                    <del>${{ number_format($item->price + 50, 2) }}</del>
+                                    <span class="current">Rs.{{ number_format($item->price, 2) }}</span>
+                                    <del>Rs.{{ number_format($item->price + 50, 2) }}</del>
                                 </div>
 
                                 <form action="{{ route('add.to.cart') }}" method="POST">

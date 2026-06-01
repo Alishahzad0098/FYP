@@ -26,14 +26,16 @@
 
                     <input type="radio" name="role" value="admin" {{ $u1->role == 'admin' ? 'checked' : '' }}>
                     <label for="role_admin">Admin</label>
+                </div>
                 <div class="mb-3">
-                    <<div class="mb-3">
                         <label for="password" class="form-label">New Password</label>
                         <input type="password" class="form-control" name="password" id="password"
                             placeholder="Leave empty to keep old password">
                 </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+    </div>
+    </div>
     </div>
     @if ($errors->any())
         <div class="alert text-danger">

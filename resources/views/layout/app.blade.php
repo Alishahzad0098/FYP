@@ -10,6 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
     <!-- Font Awesome & Google Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -238,12 +241,20 @@
                     <i class="fa fa-angle-down dropdown-arrow"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ route('table.product') }}"><i class="fa fa-cube me-2"></i> Products Table</a></li>
-                    <li><a href="{{ route('authtable') }}"><i class="fa fa-users me-2"></i> Users Table</a></li>
-                    <li><a href="{{ route('admintable') }}"><i class="fa fa-users me-2"></i> Admins Table</a></li>
-                    <li><a href="{{ route('order.table') }}"><i class="fa fa-shopping-cart me-2"></i> Orders Table</a></li>
-                    <li><a href="{{ route('orderitem.table') }}"><i class="fa fa-shopping-cart me-2"></i> Orders items Table</a></li>
-                    <li><a href="{{ route('table.car') }}"><i class="fa fa-shopping-cart me-2"></i> Carousel Table</a></li>
+                    <li><a href="{{ route('datatable.products') }}"><i class="fa fa-cube me-2"></i> Products Table</a>
+                    </li>
+                    <li><a href="{{ route('datatable.users') }}"><i class="fa fa-users me-2"></i> Users Table</a></li>
+                    <li><a href="{{ route('datatable.admins') }}"><i class="fa fa-users me-2"></i> Admins Table</a></li>
+                    <li><a href="{{ route('datatable.orders') }}"><i class="fa fa-shopping-cart me-2"></i> Orders
+                            Table</a>
+                    </li>
+                    <li><a href="{{ route('datatable.orderitems') }}"><i class="fa fa-shopping-cart me-2"></i> Orders
+                            items
+                            Table</a></li>
+                    <li><a href="{{ route('datatable.carousel') }}"><i class="fa fa-shopping-cart me-2"></i> Carousel
+                            Table</a>
+                    </li>
+                    <li><a href="{{ route('messages.index') }}"><i class="fa fa-envelope me-2"></i> Contact Messages</a></li>
                 </ul>
             </li>
 
@@ -274,12 +285,15 @@
     </div>
 
     <!-- Scripts -->
+    <!-- jQuery (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const menuToggle = document.querySelector('.menu-toggle');
             const mainMenu = document.querySelector('.main-menu');
             const content = document.querySelector('.main-content');
@@ -302,7 +316,7 @@
             adjustContent();
 
             // Sidebar toggle
-            menuToggle.addEventListener('click', function() {
+            menuToggle.addEventListener('click', function () {
                 if (window.innerWidth <= 768) {
                     mainMenu.classList.toggle('expanded'); // Mobile
                 } else {
@@ -313,7 +327,7 @@
 
             // Dropdown toggle
             dropdownToggles.forEach(toggle => {
-                toggle.addEventListener('click', function(e) {
+                toggle.addEventListener('click', function (e) {
                     e.preventDefault();
                     const dropdownMenu = this.nextElementSibling;
                     this.classList.toggle('active');

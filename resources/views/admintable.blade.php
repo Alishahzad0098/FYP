@@ -1,34 +1,44 @@
 @extends('layout.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Admins')
 
 @section('content')
     <div class="container mt-4">
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
+        <table id="admins-table" class="table table-hover table-bordered align-middle">
+            <thead class="table-dark text-center">
                 <tr>
-                    <th>Id</th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Password</th>
-                    <th>Action</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($admins as $u1)
-                    <tr>
-                        <td>{{ $u1->id }}</td>
-                        <td>{{ $u1->name }}</td>
-                        <td>{{ $u1->email }}</td>
-                        <td>{{ $u1->role }}</td>
-                        <td>{{ $u1->password }}</td>
-                        <td>
-                            <a href="{{ route('edit.user', $u1->id) }}" class="btn btn-warning">Edit</a>
-                        </td>
-                    </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
+
+    @push('scripts')
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+        <script>
+            $(function () {
+                $('#admins-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{ route("datatable.admins") }}',
+                    columns: [
+                        { data: 'id', name: 'id' },
+                        { data: 'name', name: 'name' },
+                        { data: 'email', name: 'email' },
+                        { data: 'role', name: 'role' },
+                        { data: 'created_at', name: 'created_at' },
+                        { data: 'actions', name: 'actions', orderable: false, searchable: false }
+                    ]
+                });
+            });
+        </script>
+    @endpush
 @endsection

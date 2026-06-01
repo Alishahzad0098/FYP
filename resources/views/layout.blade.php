@@ -20,33 +20,46 @@
     <link rel="stylesheet" href="{{ asset('style.css') }}">
     @stack('styles')
     <style>
-        .collection-card {
-            position: relative;
-            height: 380px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.4s ease;
-        }
+      .collection-card {
+    height: 350px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
 
-        .collection-card:hover {
-            transform: scale(1.03);
-        }
+.collection-card:hover {
+    transform: scale(1.03);
+}
 
-        .collection-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top,
-                    rgba(0, 0, 0, 0.65),
-                    rgba(0, 0, 0, 0.15));
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 24px;
-        }
+.collection-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Background images */
+.pic1 {
+    background-image: url("../asset/pic1.jpeg");
+}
+
+.pic2 {
+    background-image: url("../asset/pic2.jpeg");
+}
+
+.pic3 {
+    background-image: url("../asset/pic3.jpeg");
+}
 
         .collection-overlay h4 {
             font-size: 1.5rem;
@@ -123,10 +136,12 @@
     <!-- Header -->
     <div class="container mt-2 text-secondary">
         <div class="d-flex flex-wrap align-items-center justify-content-between px-2">
+
             <h5 class="mb-2 mb-md-0" style="margin-left: 10px;">
-                Welcome to Style Spot!!!
+                Welcome to StyleSpot!!
             </h5>
             <div class="d-flex flex-wrap align-items-center" style="margin-right: 10px;">
+
                 @guest
                     <a href="{{ route('loginpage') }}" class="text-secondary text-decoration-none me-3">
                         <h6 class="mb-0"><i class="fa-solid fa-right-to-bracket me-1"></i> Login</h6>
@@ -135,14 +150,28 @@
                         <h6 class="mb-0"><i class="fa-solid fa-circle-user me-1"></i> Register</h6>
                     </a>
                 @endguest
+
                 @auth
+                    {{-- ✅ Admin Dashboard Button --}}
+                    @if(Auth::user()->role === 'admin')
+                        <a href="{{ route('dashboard') }}" class="text-secondary text-decoration-none me-3">
+                            <h6 class="mb-0">
+                                <i class="fa-solid fa-gauge me-1"></i> Dashboard
+                            </h6>
+                        </a>
+                    @endif
+
+                    {{-- Logout --}}
                     <form action="{{ route('logout') }}" method="POST" class="d-inline">
                         @csrf
                         <button type="submit" class="btn btn-link text-secondary text-decoration-none p-0">
-                            <h6 class="mb-0"><i class="fa-solid fa-right-from-bracket me-1"></i> Logout</h6>
+                            <h6 class="mb-0">
+                                <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
+                            </h6>
                         </button>
                     </form>
                 @endauth
+
             </div>
         </div>
     </div>
@@ -154,7 +183,7 @@
                 style="text-decoration: none;">
                 <img src="{{ asset('asset/WhatsApp Image 2026-03-07 at 3.20.38 PM.jpeg') }}" alt="STYLE SPOT Logo"
                     style="height: 50px; width: auto;">
-                <h2 class="mb-0">STYLE SPOT</h2>
+                <h2 class="mb-0">StyleSpot</h2>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -189,7 +218,7 @@
 
                     {{-- Collections --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('products') }}">Collections</a>
+                        <a class="nav-link" href="{{ route('productshow') }}">Collections</a>
                     </li>
 
                     {{-- Summer Wear --}}
@@ -233,45 +262,42 @@
     <hr>
 
     <!-- Featured Collections -->
-    <div class="container collections my-5">
-        <h2 class="text-center mb-4">Trending Collections</h2>
-        <div class="row g-4">
+  <div class="container collections my-5">
+    <h2 class="text-center mb-4">Trending Collections</h2>
+    <div class="row g-4">
 
-            <div class="col-md-4">
-                <div class="collection-card"
-                    style="background-image: url('https://thumbs.dreamstime.com/b/hand-drawn-beautiful-two-young-women-shopping-bags-fashion-woman-red-skirt-street-background-black-white-sketch-171473694.jpg');">
-                    <div class="collection-overlay">
-                        <h4>Street Style</h4>
-                        <p>Bold looks for everyday wear</p>
-                        <a href="{{ route('products') }}" class="btn btn-light btn-sm">Shop Now</a>
-                    </div>
+        <div class="col-md-4">
+            <div class="collection-card pic1">
+                <div class="collection-overlay">
+                    <h4>Street Style</h4>
+                    <p>Bold looks for everyday wear</p>
+                    <a href="{{ route('productshow') }}" class="btn btn-light btn-sm">Shop Now</a>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <div class="collection-card"
-                    style="background-image: url('https://images.unsplash.com/photo-1542068829-1115f7259450?auto=format&fit=crop&w=800&q=80');">
-                    <div class="collection-overlay">
-                        <h4>Classic Wear</h4>
-                        <p>Timeless fashion essentials</p>
-                        <a href="{{ route('products') }}" class="btn btn-light btn-sm">Explore</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="collection-card"
-                    style="background-image: url('https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80');">
-                    <div class="collection-overlay">
-                        <h4>Summer Drop</h4>
-                        <p>Fresh fits for hot days</p>
-                        <a href="{{ route('products') }}" class="btn btn-light btn-sm">Discover</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <div class="col-md-4">
+            <div class="collection-card pic2">
+                <div class="collection-overlay">
+                    <h4>Classic Wear</h4>
+                    <p>Timeless fashion essentials</p>
+                    <a href="{{ route('productshow') }}" class="btn btn-light btn-sm">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="collection-card pic3">
+                <div class="collection-overlay">
+                    <h4>Summer Drop</h4>
+                    <p>Fresh fits for hot days</p>
+                    <a href="{{ route('productshow') }}" class="btn btn-light btn-sm">Discover</a>
+                </div>
+            </div>
+        </div>
+
     </div>
+</div>
 
 
     <!-- Footer -->

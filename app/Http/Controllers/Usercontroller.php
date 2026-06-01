@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Admin;
+use App\Models\ContactMessage;
+use App\Models\Order;
+use App\Models\Products;
+
 
 class Usercontroller extends Controller
 {
@@ -67,7 +72,20 @@ class Usercontroller extends Controller
     // Admin dashboard
     public function dashboardpage()
     {
-        return view('layout.dashboard'); // middleware ensures only admin can access
+        $totalProducts = Products::count();
+        $totalOrders = Order::count();
+        $totalMessages = ContactMessage::count();
+        $totalUsers = User::count();
+        $recentOrders = Order::latest()->take(5)->get();
+        $recentMessages = ContactMessage::latest()->take(5)->get();
+        return view('layout.dashboard')->with([
+            'totalProducts' => $totalProducts,
+            'totalOrders' => $totalOrders,
+            'totalMessages' => $totalMessages,
+            'totalUsers' => $totalUsers,
+            'recentOrders' => $recentOrders,
+            'recentMessages' => $recentMessages,
+        ]);
     }
 
     // Show all regular users
@@ -87,8 +105,8 @@ class Usercontroller extends Controller
     // Show edit form for a user
     public function edituser($id)
     {
-        $user = User::findOrFail($id);
-        return view('useredit', compact('user'));
+        $u1 = User::findOrFail($id);
+        return view('useredit', compact('u1'));
     }
 
     // Update a user

@@ -89,9 +89,9 @@ class Ordercontroller extends Controller
     {
         return view('Ordertable', ['order' => Order::all()]);
     }
-    public function orderitem()
+    public function orderitem($id = null)
     {
-        return view('orderitemstable', ['orderitem' => OrderItem::all()]);
+        return view('orderitemstable');
     }
 
     public function sendTestEmail(Request $request)

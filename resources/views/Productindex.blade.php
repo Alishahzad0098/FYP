@@ -120,8 +120,8 @@
                 <div class="card-body d-flex flex-column">
                     <h5>{{ $product->name }}</h5>
                     <p>
-                        <span class="item_price">${{ number_format($product->price,2) }}</span>
-                        <del>${{ number_format($product->price + 50,2) }}</del>
+                        <span class="item_price">Rs.{{ number_format($product->price,2) }}</span>
+                        <del>Rs.{{ number_format($product->price + 50,2) }}</del>
                     </p>
                     <form action="{{ route('add.to.cart') }}" method="POST" class="mt-auto">
                         @csrf

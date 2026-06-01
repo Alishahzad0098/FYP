@@ -54,12 +54,12 @@ class ProductController extends Controller
     }
 
     // Show create product form
-    function create()
+    public function create()
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
-            return view("Productsform");
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
+            return redirect()->route('home');
         }
-        return redirect()->route('home');
+        return view("Productsform");
     }
 
     // Store new product
@@ -142,22 +142,22 @@ class ProductController extends Controller
         // For filter lists
         $brands = Products::select('brand_name')->distinct()->pluck('brand_name');
 
-        $product = Products::where('gender', 'men')
+        $product = Products::where('brand_name', 'Sapphire')
             ->latest()
             ->paginate(8);
 
         // WOMEN PRODUCTS
-        $p2 = Products::where('gender', 'women')
+        $p2 = Products::where('brand_name', 'Limelight')
             ->latest()
             ->paginate(8);
 
         // KIDS PRODUCTS
-        $p3 = Products::where('gender', 'kids')
+        $p3 = Products::where('brand_name', 'Alkaram')
             ->latest()
             ->paginate(8);
 
         // ACCESSORIES (bags, perfumes, belts etc.)
-        $p4 = Products::where('type', 'accessories')
+        $p4 = Products::where('brand_name', 'Maria B')
             ->latest()
             ->paginate(8);
 
@@ -233,7 +233,9 @@ class ProductController extends Controller
     public function product($id)
     {
         $product = Products::findOrFail($id);
-        return view('Singleproduct', compact('product'));
+        $brands = Products::select('brand_name')->distinct()->pluck('brand_name');
+
+        return view('Singleproduct', compact('product', 'brands'));
     }
 
     // Search products
@@ -251,17 +253,17 @@ class ProductController extends Controller
 
 
     // About page
-   public function about()
-{
-    $brands = Products::select('brand_name')->distinct()->pluck('brand_name');
-    return view('About', compact('brands'));
-}
+    public function about()
+    {
+        $brands = Products::select('brand_name')->distinct()->pluck('brand_name');
+        return view('About', compact('brands'));
+    }
 
-public function contact()
-{
-    $brands = Products::select('brand_name')->distinct()->pluck('brand_name');
-    return view('Contact', compact('brands'));
-} 
+    public function contact()
+    {
+        $brands = Products::select('brand_name')->distinct()->pluck('brand_name');
+        return view('Contact', compact('brands'));
+    }
     public function index(Request $request)
     {
         $query = Products::query();

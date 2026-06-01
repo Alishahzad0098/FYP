@@ -307,7 +307,7 @@
 @endif
     <div class="container mt-5">
         <!-- Page Heading -->
-        <div class="text-center my-5">
+        <div class="text-center my-5" style="color: green;">
             <h1>Our <span class="fw-bold">New Products</span></h1>
         </div>
 
@@ -368,9 +368,9 @@
                         <!-- Price -->
                         <h5 class="mt-4">Price</h5>
                         @foreach ([
-                                '0-50' => 'Under $50',
-                                '50-100' => '$50 - $100',
-                                '100+' => 'Above $100'
+                                '0-2000' => 'Under Rs.2000',
+                                '2000-5000' => 'Rs.2000 - Rs.5000',
+                                '5000+' => 'Above Rs.5000'
                             ] as $key => $label)
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="price" value="{{ $key }}" {{ request('price') == $key ? 'checked' : '' }}>
@@ -486,7 +486,7 @@
                                         @endif
                                     </div>
 
-                                    <a href="{{ route('productshow', ['id' => $item->id]) }}" class="quick-view">Quick View</a>
+                                    <a href="{{ route('product', ['id' => $item->id]) }}" class="quick-view">Quick View</a>
                                 </div>
 
                                 <div class="card-caption">
@@ -494,8 +494,8 @@
                                     <p class="article">{{ $item->article_name }}</p>
 
                                     <div class="price">
-                                        <span class="current">${{ number_format($item->price, 2) }}</span>
-                                        <del>${{ number_format($item->price + 50, 2) }}</del>
+                                        <span class="current">Rs.{{ number_format($item->price, 2) }}</span>
+                                        <del>Rs.{{ number_format($item->price + 2000, 2) }}</del>
                                     </div>
 
                                     <form action="{{ route('add.to.cart') }}" method="POST">

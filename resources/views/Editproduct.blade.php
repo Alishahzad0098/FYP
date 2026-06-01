@@ -91,7 +91,7 @@
 
                     <!-- Price -->
                     <div class="mb-3">
-                        <label for="price" class="form-label fw-bold">Price ($)</label>
+                        <label for="price" class="form-label fw-bold">Price (PKR)</label>
                         <input type="number" name="price" id="price" class="form-control" 
                                value="{{ old('price', $product->price) }}" required>
                     </div>

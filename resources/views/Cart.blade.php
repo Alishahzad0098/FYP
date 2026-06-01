@@ -220,8 +220,8 @@
                                     <button class="btn btn-sm btn-primary">Update</button>
                                 </form>
                             </td>
-                            <td data-label="Price">${{ number_format($item['price'], 2) }}</td>
-                            <td data-label="Total">${{ number_format($itemTotal, 2) }}</td>
+                            <td data-label="Price">Rs.{{ number_format($item['price'], 2) }}</td>
+                            <td data-label="Total">Rs.{{ number_format($itemTotal, 2) }}</td>
                             <td data-label="Remove">
                                 <form method="POST" action="{{ route('cart.remove', $id) }}">
                                     @csrf
@@ -234,7 +234,7 @@
             </table>
 
             <div class="total-row">
-                <h4>Total Price: <span class="text-success">${{ number_format($totalPrice, 2) }}</span></h4>
+                <h4>Total Price: <span class="text-success">Rs.{{ number_format($totalPrice, 2) }}</span></h4>
             </div>
 
             <div class="cart-actions mb-5">
